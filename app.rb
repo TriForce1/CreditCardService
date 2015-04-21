@@ -46,4 +46,13 @@ class CreditCardAPI < Sinatra::Base
       halt 410
     end
   end
+
+  get '/api/v1/get' do
+    begin
+      creditcards = CreditCard.all.to_json
+    rescue
+      halt 500
+    end
+  end
+
 end
