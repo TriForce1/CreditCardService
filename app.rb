@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative './lib/credit_card.rb'
+require_relative './model/credit_card.rb'
 
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
@@ -19,7 +19,7 @@ class CreditCardAPI < Sinatra::Base
     if result == false || params[:card_number].length < 2
       return {"Card" => params[:card_number], "validated" => "false"}.to_json
     end
-    
+
     {"Card" => params[:card_number], "validated" => c.validate_checksum}.to_json
   end
 end
