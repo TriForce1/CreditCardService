@@ -1,22 +1,24 @@
-require_relative './luhn_validator.rb'
+require_relative '../lib/luhn_validator.rb'
 require 'json'
 require 'openssl'
+require 'sinatra/activerecord'
+require_relative '../environments'
 
 # Credit Card Class
-class CreditCard
+class CreditCard < ActiveRecord::Base
   # TODO: mixin the LuhnValidator using an 'include' statement
-  include LuhnValidator
+    include LuhnValidator
 
   # instance variables with automatic getter/setter methods
-  attr_accessor :number, :expiration_date, :owner, :credit_network
+  # attr_accessor :number, :expiration_date, :owner, :credit_network
 
-  def initialize(number, expiration_date, owner, credit_network)
+  """def initialize(number, expiration_date, owner, credit_network)
     # TODO: initialize the instance variables listed above(don't forget the '@')
     @number = number
     @expiration_date = expiration_date
     @owner = owner
     @credit_network = credit_network
-  end
+  end"""
 
   # returns json string
   def to_json
@@ -52,4 +54,5 @@ class CreditCard
     sha256 = OpenSSL::Digest::SHA256.new
     sha256.digest(to_s).unpack('H*')
   end
+
 end
