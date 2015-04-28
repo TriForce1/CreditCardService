@@ -4,7 +4,7 @@ This service validates credit numbers using the luhn algorithm. Api can be acces
 
 ## Note! Please do before use
   1. Run ```bundle install```
-  1. Run ```db:migrate```
+  1. Run ```rake db:migrate```
   2. Create ```config_env.rb``` file in the ```config``` directory. Follow instructions in ```config_env.rb.example``` file  
 
 ## Usage
