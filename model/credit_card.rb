@@ -26,7 +26,7 @@ class CreditCard < ActiveRecord::Base
   end
 
   # Encrypts credit card number for storage
-  def number = (number_str)
+  def number=(number_str)
     secret_box = RbNaCl::SecretBox.new(key)
     self.nonce =RbNaCl::Random.random_bytes(secret_box.nonce_bytes)
     self.encrypted_number = secret_box.encrypt(self.nonce, number_str)
