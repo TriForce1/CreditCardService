@@ -1,7 +1,11 @@
 # Credit Card Service
 
-This service validates credit numbers using the luhn algorithm. Api can be accessed at http://credit-card-api-service.herokuapp.com
+This service validates credit numbers using the luhn algorithm. Api can be accessed at http://credit-card-api-service.herokuapp.com.
 
+## Note! Please do before use
+  1. Run ```bundle install```
+  1. Run ```db:migrate```
+  2. Create ```config_env.rb``` file in the ```config``` directory. Follow instructions in ```config_env.rb.example``` file  
 
 ## Usage
 
