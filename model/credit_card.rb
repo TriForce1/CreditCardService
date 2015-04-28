@@ -2,6 +2,7 @@ require_relative '../lib/luhn_validator.rb'
 require 'json'
 require 'openssl'
 require 'sinatra/activerecord'
+require 'rbnacl/libsodium'
 require_relative '../environments'
 
 # Credit Card Class
@@ -19,6 +20,23 @@ class CreditCard < ActiveRecord::Base
     @owner = owner
     @credit_network = credit_network
   end"""
+  #Function to Make copy of DB_KEY
+  def key
+    ENV['DB_KEY'].dup.force_encoding Encoding::BINARY
+  end
+
+  # Encrypts credit card number for storage
+  def number = (number_str)
+    secret_box = RbNaCl::SecretBox.new(key)
+    self.nonce =RbNaCl::Random.random_bytes(secret_box.nonce_bytes)
+    self.encrypted_number = secret_box.encrypt(self.nonce, number_str)
+  end
+
+  # Decrypts credit card
+  def number
+    secret_box = RbNaCl::SecretBox.new(key)
+    secret_box.decrypt(self.nonce, self.encrypted_number)
+  end
 
   # returns json string
   def to_json
