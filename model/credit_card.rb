@@ -1,3 +1,4 @@
+require 'base64'
 require_relative '../lib/luhn_validator.rb'
 require 'json'
 require 'openssl'
@@ -28,14 +29,18 @@ class CreditCard < ActiveRecord::Base
   # Encrypts credit card number for storage
   def number=(number_str)
     secret_box = RbNaCl::SecretBox.new(key)
-    self.nonce =RbNaCl::Random.random_bytes(secret_box.nonce_bytes)
-    self.encrypted_number = secret_box.encrypt(self.nonce, number_str)
+    self.nonce = RbNaCl::Random.random_bytes(secret_box.nonce_bytes)
+    # puts nonce
+    self.encrypted_number = Base64.encode64(secret_box.encrypt(self.nonce, number_str))
+    # puts encrypted_number
+    self.nonce = Base64.encode64(self.nonce)
+    # puts nonce
   end
 
   # Decrypts credit card
   def number
     secret_box = RbNaCl::SecretBox.new(key)
-    secret_box.decrypt(self.nonce, self.encrypted_number)
+    secret_box.decrypt(Base64.decode64(self.nonce), Base64.decode64(self.encrypted_number))
   end
 
   # returns json string
