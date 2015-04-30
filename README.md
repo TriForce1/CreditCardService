@@ -4,8 +4,8 @@ This service validates credit numbers using the luhn algorithm. Api can be acces
 
 ## Note! Please do before use
   1. Run ```bundle install```
-  1. Run ```rake db:migrate```
-  2. Create ```config_env.rb``` file in the ```config``` directory. Follow instructions in ```config_env.rb.example``` file  
+  2. Run ```rake db:migrate```
+  3. Create ```config_env.rb``` file in the ```config``` directory. Follow the instructions in ```config_env.rb.example``` file  
 
 ## Usage
 
@@ -30,7 +30,7 @@ This service validates credit numbers using the luhn algorithm. Api can be acces
       ```
     - GET /api/v1/get
 
-      Return all credit card data from database in as a JSON string. Simply type link below in browser after running local web server using ```rackup``` command in terminal. This function is not current available on our online API validation service.
+      Return all credit card data from database in as a JSON string. Simply type the link below in the browser after running local web server using the ```rackup``` command in terminal. This function is not currently available on our online API validation service.
       ```
       http://127.0.0.1:9292/api/v1/get
       ```
@@ -38,11 +38,11 @@ This service validates credit numbers using the luhn algorithm. Api can be acces
 
   * ### Post paths  
 
-    The Post path allows you to post or save valid credit card numbers to your database. Numbers that do not pass the validation will not be saved to database. Post paths are not current on the online API and can only be use locally. Before using post route remember to run ```rake db:migrate``` command.
+    The Post path allows you to post or save valid credit card numbers to your database. Numbers that do not pass the validation will not be saved to database. Post paths are not currently on the online API and can only be use locally. Before using the post route remember to run the ```rake db:migrate``` command.
 
     - POST /api/v1/credit_card
 
-      The curl tool is used to test above POST route. Below is a valid example of how you can insert into database.
+      The curl tool is used to test the above POST route. Below is a valid example of how you can insert data into the database.
       ```
       curl -X POST -d "{\"number\":\"5192234226081802\",\"expiration_date\":\"2017-04-19\",\"owner\":\"Cheng-Yu Hsu\",\"credit_network\":\"Visa\"}" http://127.0.0.1:9292/api/v1/credit_card
       ```
