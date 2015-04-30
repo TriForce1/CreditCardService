@@ -1,8 +1,16 @@
 require 'sinatra'
+require 'config_env'
 require_relative './model/credit_card.rb'
 
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
+
+  configure :development, :test do
+    require 'hirb'
+    Hirb.enable
+
+    ConfigEnv.path_to_config("#{__dir__}/config/config_env.rb")
+  end
 
   get '/' do
     'The CreditCardAPI is up and running!'
@@ -34,6 +42,8 @@ class CreditCardAPI < Sinatra::Base
       owner: req['owner'],
       credit_network: req['credit_network']
     )
+    creditcard.encrypted_number = creditcard.encrypted_number
+    creditcard.nonce = creditcard.nonce
 
     begin
       unless creditcard.validate_checksum
