@@ -15,8 +15,13 @@ gem 'sinatra-activerecord'
 group :development do
   gem 'sqlite3'
   gem 'tux'
+  gem 'hirb'
 end
 
-group :development, :test do
-  gem 'hirb'
+group :test do
+  gem 'minitest'
+  gem 'rack'
+  gem 'rack-test'
+  gem 'rake'
+  gem 'sqlite3'
 end
