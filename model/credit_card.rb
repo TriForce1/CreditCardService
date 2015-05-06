@@ -23,7 +23,7 @@ class CreditCard < ActiveRecord::Base
   end"""
   #Function to Make copy of DB_KEY
   def key
-    ENV['DB_KEY'].dup.force_encoding Encoding::BINARY
+    Base64.urlsafe_decode64(ENV['DB_KEY'])
   end
 
   # Encrypts credit card number for storage

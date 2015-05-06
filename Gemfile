@@ -20,3 +20,7 @@ end
 group :development, :test do
   gem 'hirb'
 end
+
+group :production do
+  gem 'pg'
+end
