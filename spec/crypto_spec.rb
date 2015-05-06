@@ -1,4 +1,4 @@
-require_relative '../lib/credit_card'
+require_relative '../model/credit_card'
 require_relative '../lib/substitution_cipher'
 require_relative '../lib/aes_cipher'
 require_relative '../lib/double_trans_cipher'
@@ -9,8 +9,13 @@ passwords = YAML.load_file 'spec/test_passwords.yml'
 
 describe 'Test card info encryption' do
   before do
-    @cc = CreditCard.new('4916603231464963', 'Mar-30-2020',
-                         'Soumya Ray', 'Visa')
+    @cc = CreditCard.new(
+     number: '4916603231464963',
+     expiration_date: 'Mar-30-2020',
+     owner: 'Soumya Ray',
+     credit_network: 'Visa'
+   )
+
     @key = 3
     @key2 = 'I am a very very special key'
   end
