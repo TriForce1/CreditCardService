@@ -1,21 +1,46 @@
-require_relative './luhn_validator.rb'
+require 'base64'
+require_relative '../lib/luhn_validator.rb'
 require 'json'
 require 'openssl'
+require 'sinatra/activerecord'
+require 'rbnacl/libsodium'
+require_relative '../environments'
 
 # Credit Card Class
-class CreditCard
+class CreditCard < ActiveRecord::Base
   # TODO: mixin the LuhnValidator using an 'include' statement
-  include LuhnValidator
+    include LuhnValidator
 
   # instance variables with automatic getter/setter methods
-  attr_accessor :number, :expiration_date, :owner, :credit_network
+  # attr_accessor :number, :expiration_date, :owner, :credit_network
 
-  def initialize(number, expiration_date, owner, credit_network)
+  """def initialize(number, expiration_date, owner, credit_network)
     # TODO: initialize the instance variables listed above(don't forget the '@')
     @number = number
     @expiration_date = expiration_date
     @owner = owner
     @credit_network = credit_network
+  end"""
+  #Function to Make copy of DB_KEY
+  def key
+    Base64.urlsafe_decode64(ENV['DB_KEY'])
+  end
+
+  # Encrypts credit card number for storage
+  def number=(number_str)
+    secret_box = RbNaCl::SecretBox.new(key)
+    self.nonce = RbNaCl::Random.random_bytes(secret_box.nonce_bytes)
+    # puts nonce
+    self.encrypted_number = Base64.encode64(secret_box.encrypt(self.nonce, number_str))
+    # puts encrypted_number
+    self.nonce = Base64.encode64(self.nonce)
+    # puts nonce
+  end
+
+  # Decrypts credit card
+  def number
+    secret_box = RbNaCl::SecretBox.new(key)
+    secret_box.decrypt(Base64.decode64(self.nonce), Base64.decode64(self.encrypted_number))
   end
 
   # returns json string
@@ -52,4 +77,5 @@ class CreditCard
     sha256 = OpenSSL::Digest::SHA256.new
     sha256.digest(to_s).unpack('H*')
   end
+
 end
