@@ -76,6 +76,8 @@ DEPENDENCIES
   json
   minitest
   openssl
+  rack
+  rack-test
   rake
   rbnacl-libsodium
   sinatra
