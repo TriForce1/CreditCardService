@@ -22,6 +22,7 @@ class CreditCard < ActiveRecord::Base
     @credit_network = credit_network
   end"""
   #Function to Make copy of DB_KEY
+  #Function to Make copy of DB_KEY
   def key
     Base64.urlsafe_decode64(ENV['DB_KEY'])
   end
