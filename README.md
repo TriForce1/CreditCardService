@@ -43,10 +43,9 @@ This service validates credit numbers using the luhn algorithm. Api can be acces
     - POST /api/v1/credit_card
 
       The curl tool is used to test the above POST route. Below is a valid example of how you can insert data into your local database.
-      ```
+
       curl -X POST -d "{\"number\":\"5192234226081802\",\"expiration_date\":\"2017-04-19\",\"owner\":\"Cheng-Yu Hsu\",\"credit_network\":\"Visa\"}" http://127.0.0.1:9292/api/v1/credit_card
-      ``` 
-			Curl can also be used to post to online data base of our service. Below is the format.
-			```
-       curl -H 'accept: application/json' -H 'content-type: application/json' http://credit-card-api-service.herokuapp.com/api/v1/credit_card -d "{\"number\":\"5192234226081802\",\"expiration_date\":\"2017-04-19\",\"owner\":\"Cheng-Yu Hsu\",\"credit_network\":\"Visa\"}"
-      ```
+
+			Curl can also be used to post to the online database of our service. Below is the format.
+
+      curl -H 'accept: application/json' -H 'content-type: application/json' http://credit-card-api-service.herokuapp.com/api/v1/credit_card -d "{\"number\":\"5192234226081802\",\"expiration_date\":\"2017-04-19\",\"owner\":\"Cheng-Yu Hsu\",\"credit_network\":\"Visa\"}"
