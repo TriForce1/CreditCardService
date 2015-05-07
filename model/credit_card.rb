@@ -47,10 +47,10 @@ class CreditCard < ActiveRecord::Base
   def to_json
     {
       # TODO: setup the hash with all instance vairables to serialize into json
-      'Name' => @owner,
-      'Card_Number' => @number,
-      'Expiration_Date' => @expiration_date,
-      'Credit_Card_Network' => @credit_network
+      'Name' => owner,
+      'Card_Number' => number,
+      'Expiration_Date' => expiration_date,
+      'Credit_Card_Network' => credit_network
     }.to_json
   end
 
@@ -63,8 +63,8 @@ class CreditCard < ActiveRecord::Base
   def self.from_s(card_s)
     # TODO: deserializing a CreditCard object
     cc = JSON.parse(card_s)
-    CreditCard.new(cc['Card_Number'], cc['Expiration_Date'],
-                   cc['Name'], cc['Credit_Card_Network'])
+    CreditCard.new(number: cc['Card_Number'], expiration_date: cc['Expiration_Date'],
+                   owner: cc['Name'],credit_network: cc['Credit_Card_Network'])
   end
 
   # overrides the default hash method

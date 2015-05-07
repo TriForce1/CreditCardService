@@ -1,14 +1,26 @@
-require_relative '../lib/credit_card'
+require_relative '../model/credit_card'
 require 'minitest/autorun'
 
 describe 'Test hashing requirements' do
   before do
-    @cc1 = CreditCard.new('4916603231464963', 'Mar-30-2020', 'Soumya Ray',
-                          'Visa')
-    @cc2 = CreditCard.new('4916603231464963', 'Mar-30-2020', 'Soumya Ray',
-                          'Visa')
-    @cc3 = CreditCard.new('5423661657234057', 'Feb-30-2020', 'Soumya Ray',
-                          'Mastercard')
+    @cc1 = CreditCard.new(
+     number: '4916603231464963',
+     expiration_date: 'Mar-30-2020',
+     owner: 'Soumya Ray',
+     credit_network: 'Visa'
+   )
+    @cc2 = CreditCard.new(
+    number: '4916603231464963',
+    expiration_date: 'Mar-30-2020',
+    owner: 'Soumya Ray',
+    credit_network: 'Visa'
+    )
+    @cc3 = CreditCard.new(
+     number: '5423661657234057',
+     expiration_date: 'Mar-30-2020',
+     owner: 'Soumya Ray',
+     credit_network: 'Visa'
+    )
   end
 
   describe 'Test regular hashing' do

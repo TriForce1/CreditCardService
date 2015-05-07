@@ -42,8 +42,8 @@ class CreditCardAPI < Sinatra::Base
       owner: req['owner'],
       credit_network: req['credit_network']
     )
-    creditcard.encrypted_number = creditcard.encrypted_number
-    creditcard.nonce = creditcard.nonce
+    # creditcard.encrypted_number = creditcard.encrypted_number
+    # creditcard.nonce = creditcard.nonce
 
     begin
       unless creditcard.validate_checksum
