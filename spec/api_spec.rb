@@ -26,7 +26,33 @@ describe 'Credit Card API Test' do
       get "/api/v1/credit_card/valdate?card_number=4539075978941247"
       last_response.status.must_equal 404
     end
-
   end
 
+  describe 'Testing saving credit card obejct' do
+    it 'should return 400 status code' do
+      req_header = {'CONTENT_TYPE' => 'application/json'}
+      req_body = {
+        'number': '4024097178888052',
+        'expiration_date': '2017-04-19',
+        'owner': 'Fake fake',
+        'credit_network': 'Visa'
+      }
+
+      post '/api/v1/credit_card', req_body.to_json, req_header
+      last_response.status.must_equal 400
+    end
+
+    it 'should return 201 status code' do
+      req_header = {'CONTENT_TYPE' => 'application/json'}
+      req_body = {
+        'number': '5192234226081802',
+        'expiration_date': '2017-04-19',
+        'owner': 'Valid man',
+        'credit_network': 'Visa'
+      }
+
+      post '/api/v1/credit_card', req_body.to_json, req_header
+      last_response.status.must_equal 201
+    end
+  end
 end
