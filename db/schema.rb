@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421081203) do
+ActiveRecord::Schema.define(version: 20150513061413) do
 
   create_table "credit_cards", force: :cascade do |t|
     t.string   "nonce"
@@ -21,6 +21,18 @@ ActiveRecord::Schema.define(version: 20150421081203) do
     t.string   "credit_network"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "salt"
+    t.string   "username"
+    t.string   "fullname"
+    t.string   "hash_password"
+    t.string   "email"
+    t.string   "address"
+    t.date     "dob"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end
