@@ -11,6 +11,7 @@ gem 'rbnacl-libsodium'
 
 gem 'activerecord'
 gem 'sinatra-activerecord'
+gem 'protected_attributes'
 
 group :development do
   gem 'sqlite3'
@@ -22,8 +23,6 @@ group :test do
   gem 'minitest'
   gem 'rack'
   gem 'rack-test'
-  gem 'rake'
-  gem 'sqlite3'
 end
 
 group :production do
