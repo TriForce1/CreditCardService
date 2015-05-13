@@ -1,7 +1,10 @@
 %h2 Login
-%form{:action => '/login', :method => 'post', :id => 'user-form'}
-  %label{:for => 'username'} Username
-  %input{:type => 'text', :name => 'username', :id => 'username_input'}
-  %label{:for => 'password'} Password
-  %input{:type => 'password', :name => 'password', :id => 'password_input'}
-  %input{:type => 'submit', :id => 'login-form-submit', :class => 'submit', :value => 'submit'}
+%form{:action => '/login', :method => 'post', :id => 'user-form', class: 'form-horizontal'}
+    .form-group
+        %label{:for => 'username'} Username
+        %input{:type => 'text', :name => 'username', :id => 'username_input'}
+    .form-group
+        %label{:for => 'password'} Password
+        %input{:type => 'password', :name => 'password', :id => 'password_input'}
+    .form-group
+        %input{:type => 'submit', :id => 'login-form-submit', :class => 'btn btn-default', :value => 'submit'}
