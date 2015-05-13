@@ -23,6 +23,8 @@ group :test do
   gem 'minitest'
   gem 'rack'
   gem 'rack-test'
+  gem 'rake'
+  gem 'sqlite3'
 end
 
 group :production do
