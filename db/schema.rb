@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 20150513061413) do
     t.string   "hashed_password"
     t.string   "email"
     t.string   "address"
-    t.date     "dob"
+    t.string   "nonce"
+    t.string   "dob"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
