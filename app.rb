@@ -90,8 +90,11 @@ class CreditCardAPI < Sinatra::Base
     password_confirm = params[:password_confirm]
     begin
       if password == password_confirm
-        new_user = User.new(username: username, fullname: fullname, email: email, address: address, dob: dob)
+        new_user = User.new(username: username, email: email)
         new_user.password = password
+        new_user.address = new_user.attribute_encrypt(address)
+        new_user.fullname = new_user.attribute_encrypt(fullname)
+        new_user.dob = new_user.attribute_encrypt(dob)
         new_user.save! ? login_user(new_user) : fail('Could not create a new user')
       else
         fail 'Passwords do not match'

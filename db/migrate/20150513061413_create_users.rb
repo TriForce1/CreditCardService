@@ -7,7 +7,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :hashed_password
       t.string :email
       t.string :address
-      t.date :dob
+      t.string :nonce
+      t.string :dob
       t.timestamps null: false
     end
   end
