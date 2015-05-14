@@ -1,7 +1,9 @@
 require 'sinatra'
 require 'config_env'
-require_relative './model/credit_card.rb'
-require_relative './helpers/creditcard_helper.rb'
+require 'protected_attributes'
+require_relative './model/credit_card'
+require_relative './model/user'
+require_relative './helpers/creditcard_helper'
 
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
@@ -19,6 +21,7 @@ class CreditCardAPI < Sinatra::Base
   before do
     @current_user = session[:user_id] ? User.find_by_id(session[:user_id]) : nil
   end
+
 
   get '/' do
     # 'The CreditCardAPI is up and running!'
@@ -79,12 +82,15 @@ class CreditCardAPI < Sinatra::Base
   post '/register' do
     logger.info('Register')
     username = params[:username]
+    fullname = params[:fullname]
     email = params[:email]
+    address = params[:address]
     password = params[:password]
+    dob = params[:dob]
     password_confirm = params[:password_confirm]
     begin
       if password == password_confirm
-        new_user = User.new(username: username, email: email)
+        new_user = User.new(username: username, fullname: fullname, email: email, address: address, dob: dob)
         new_user.password = password
         new_user.save! ? login_user(new_user) : fail('Could not create a new user')
       else
@@ -103,7 +109,7 @@ class CreditCardAPI < Sinatra::Base
   post '/login' do
     username = params[:username]
     password = params[:password]
-    user = User.authenicate!(username, password)
+    user = User.authenticate!(username, password)
     user ? login_user(user) : redirect('/login')
   end
 
