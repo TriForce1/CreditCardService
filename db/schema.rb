@@ -27,12 +27,12 @@ ActiveRecord::Schema.define(version: 20150513061413) do
     t.string   "salt"
     t.string   "username"
     t.string   "fullname"
-    t.string   "hash_password"
+    t.string   "hashed_password"
     t.string   "email"
     t.string   "address"
     t.date     "dob"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end
