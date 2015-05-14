@@ -13,7 +13,7 @@
           %ul{class: 'nav navbar-nav'}
             - if @current_user
               %li{class: 'navbar-brand',color: 'red'}
-                = "welcome #{@current_user.username}"
+                = "( Welcome! #{@current_user.username} )"
               %li
                 %a{href: '/logout'} logout
             - else
