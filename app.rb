@@ -15,6 +15,7 @@ class CreditCardAPI < Sinatra::Base
     require 'hirb'
     Hirb.enable
 
+
     ConfigEnv.path_to_config("#{__dir__}/config/config_env.rb")
   end
 
