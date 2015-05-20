@@ -8,7 +8,7 @@ require_relative './helpers/creditcard_helper'
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
   include CreditCardHelper
-  use Rack::Session::Cookie
+  use Rack::Session::Cookie, secret: ENV['MSG_KEY']
   enable :logging
 
   configure :development, :test do
@@ -19,7 +19,7 @@ class CreditCardAPI < Sinatra::Base
   end
 
   before do
-    @current_user = session[:user_id] ? User.find_by_id(session[:user_id]) : nil
+    @current_user = session[:auth_token] ? find_user_by_token(session[:auth_token]) : nil
   end
 
 
@@ -117,7 +117,7 @@ class CreditCardAPI < Sinatra::Base
   end
 
   get '/logout' do
-    session[:user_id] = nil
+    session[:auth_token] = nil
     redirect '/'
   end
 
