@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'config_env'
 require 'protected_attributes'
+require 'rack-flash'
 require_relative './model/credit_card'
 require_relative './model/user'
 require_relative './helpers/creditcard_helper'
@@ -8,14 +9,18 @@ require_relative './helpers/creditcard_helper'
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
   include CreditCardHelper
-  use Rack::Session::Cookie
+
   enable :logging
 
   configure :development, :test do
     require 'hirb'
     Hirb.enable
-
     ConfigEnv.path_to_config("#{__dir__}/config/config_env.rb")
+  end
+
+  configure do
+    use Rack::Session::Cookie, secret: ENV['MSG_KEY']
+    use Rack::Flash, :sweep => true
   end
 
   before do
@@ -98,9 +103,11 @@ class CreditCardAPI < Sinatra::Base
         new_user.save! ? login_user(new_user) : fail('Could not create a new user')
       else
         fail 'Passwords do not match'
+        flash[:error] = "Passwords do not match"
       end
     rescue => e
       logger.error(e)
+      flash[:error] = "Please try again"
       redirect '/register'
     end
   end
@@ -113,11 +120,17 @@ class CreditCardAPI < Sinatra::Base
     username = params[:username]
     password = params[:password]
     user = User.authenticate!(username, password)
-    user ? login_user(user) : redirect('/login')
+    if user
+      login_user(user)
+    else
+      flash[:error] = "Incorrect username or password!"
+      redirect('/login')
+    end
   end
 
   get '/logout' do
     session[:user_id] = nil
+    flash[:notice] = "You have successfully logged out."
     redirect '/'
   end
 
