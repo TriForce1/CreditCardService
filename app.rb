@@ -24,7 +24,7 @@ class CreditCardAPI < Sinatra::Base
   end
 
   before do
-    @current_user = session[:user_id] ? User.find_by_id(session[:user_id]) : nil
+    @current_user = session[:auth_token] ? find_user_by_token(session[:auth_token]) : nil
   end
 
 
@@ -129,7 +129,7 @@ class CreditCardAPI < Sinatra::Base
   end
 
   get '/logout' do
-    session[:user_id] = nil
+    session[:auth_token] = nil
     flash[:notice] = "You have successfully logged out."
     redirect '/'
   end
