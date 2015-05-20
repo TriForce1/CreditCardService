@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'json'
 gem 'minitest'
@@ -8,6 +8,8 @@ gem 'thin'
 gem 'rake'
 gem 'config_env'
 gem 'rbnacl-libsodium'
+gem 'rack-flash3'
+gem 'pony'
 
 gem 'activerecord'
 gem 'sinatra-activerecord'
