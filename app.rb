@@ -80,8 +80,10 @@ class CreditCardAPI < Sinatra::Base
   end
 
   get '/register' do
+    puts 'Good Stuffs'
     if token = params[:token]
       begin
+        puts 'Good Stuff'
         create_user_with_encrypted_token(token)
         flash[:notice] = "Welcome! Your account has been successfully created."
       rescue
