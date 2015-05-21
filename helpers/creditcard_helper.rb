@@ -83,10 +83,15 @@ module CreditCardHelper
   def create_account_with_registration(registration)
     puts "Creating Account"
     new_user = User.new(username: registration.username, email: registration.email)
+    puts "Step 1"
     new_user.password =  registration.password
+    puts "Step 2"
     new_user.fullname = new_user.attribute_encrypt(fullname)
+    puts "Step 3"
     new_user.dob = new_user.attribute_encrypt(dob)
+    puts "Step 4"
     new_user.address = new_user.attribute_encrypt(address)
+    puts "Step 5"
     new_user.save! ? login_user(new_user) : fail('Could not create a new user')
   end
 
