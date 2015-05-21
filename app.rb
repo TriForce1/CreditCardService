@@ -91,7 +91,7 @@ class CreditCardAPI < Sinatra::Base
     if token = params[:token]
       begin
         create_user_with_encrypted_token(token)
-        flash[:notice] = "Welcome! Your account has been successfully created."
+        flash[:notice] = "Your account has been successfully created."
       rescue
         flash[:error] = "Your account could not be created. Your link is either expired or invalid."
       end
@@ -114,7 +114,7 @@ class CreditCardAPI < Sinatra::Base
       flash[:error]= "Please enter a valid email address."
       redirect '/register'
     elsif user_available(params[:username]) != nil
-      flash[:error]= "Username is not available."
+      flash[:error]= "This username is not available."
       redirect '/register'
     else
       begin
