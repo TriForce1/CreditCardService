@@ -1,7 +1,10 @@
 require 'sinatra'
 require 'config_env'
+require 'rack-flash'
+require 'json'
 require 'protected_attributes'
 require 'rack-flash'
+require 'email_veracity'
 require_relative './model/credit_card'
 require_relative './model/user'
 require_relative './helpers/creditcard_helper'
@@ -11,6 +14,11 @@ class CreditCardAPI < Sinatra::Base
   include CreditCardHelper
 
   enable :logging
+
+  configure do
+    use Rack::Session::Cookie, secret: ENV['MSG_KEY']
+    use Rack::Flash, :sweep => true
+  end
 
   configure :development, :test do
     require 'hirb'
@@ -26,7 +34,6 @@ class CreditCardAPI < Sinatra::Base
   before do
     @current_user = session[:auth_token] ? find_user_by_token(session[:auth_token]) : nil
   end
-
 
   get '/' do
     # 'The CreditCardAPI is up and running!'
@@ -44,7 +51,7 @@ class CreditCardAPI < Sinatra::Base
 
     # Validate for string length and correct type
     if result == false || params[:card_number].length < 2
-      return {"Card" => params[:card_number], "validated" => "false"}.to_json
+      return { "Card" => params[:card_number], "validated" => "false" }.to_json
     end
 
     {"Card" => params[:card_number], "validated" => c.validate_checksum}.to_json
@@ -81,34 +88,39 @@ class CreditCardAPI < Sinatra::Base
   end
 
   get '/register' do
-    haml :register
+    if token = params[:token]
+      begin
+        create_user_with_encrypted_token(token)
+        flash[:notice] = "Welcome! Your account has been successfully created."
+      rescue
+        flash[:error] = "Your account could not be created. Your link is either expired or invalid."
+      end
+      redirect '/'
+    else
+      haml(:register)
+    end
   end
 
   post '/register' do
     logger.info('Register')
-    username = params[:username]
-    fullname = params[:fullname]
-    email = params[:email]
-    address = params[:address]
-    password = params[:password]
-    dob = params[:dob]
-    password_confirm = params[:password_confirm]
-    begin
-      if password == password_confirm
-        new_user = User.new(username: username, email: email)
-        new_user.password = password
-        new_user.address = new_user.attribute_encrypt(address)
-        new_user.fullname = new_user.attribute_encrypt(fullname)
-        new_user.dob = new_user.attribute_encrypt(dob)
-        new_user.save! ? login_user(new_user) : fail('Could not create a new user')
-      else
-        fail 'Passwords do not match'
-        flash[:error] = "Passwords do not match"
-      end
-    rescue => e
-      logger.error(e)
-      flash[:error] = "Please try again"
+    registration = Registration.new(params)
+    if (registration.complete?) != true
+      flash[:error]= "Please fill in ALL fields."
       redirect '/register'
+    elsif (params[:password] == params[:password_confirm]) != true
+      flash[:error]= "Please ensure that the passwords are the SAME."
+      redirect '/register'
+    elsif EmailVeracity::Address.new(params[:email]).valid? != true
+      flash[:error]= "Please enter a valid email address."
+      redirect '/register'
+    else
+      begin
+        email_registration_verification(registration)
+        flash[:notice] = "A verification link has been sent to #{params[:email]}. Please check your email!"
+        redirect '/'
+      rescue => e
+        logger.error "FAIL EMAIL: #{e}"
+      end
     end
   end
 

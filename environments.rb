@@ -23,15 +23,18 @@ configure :production do
   )
 end
 
-Pony.options = {
-  :via => :smtp,
-  :via_options => {
-    :address => 'smtp.sendgrid.net',
-    :port => '587',
-    :domain => 'heroku.com',
-    :user_name => ENV['SENDGRID_USERNAME'],
-    :password => ENV['SENDGRID_PASSWORD'],
-    :authentication => :plain,
-    :enable_starttls_auto => true
+configure do
+  Pony.options = {
+    from: "noreply@#{ENV['SENDGRID_DOMAIN']}",
+    via: :smtp,
+    via_options: {
+      address: 'smtp.sendgrid.net',
+      port: '587',
+      domain: ENV['SENDGRID_DOMAIN'],
+      user_name: ENV['SENDGRID_USERNAME'],
+      password: ENV['SENDGRID_PASSWORD'],
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
   }
-}
+end
