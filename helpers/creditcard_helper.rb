@@ -90,11 +90,11 @@ module CreditCardHelper
     puts new_user.nonce
     puts "Step 2"
     puts Time.now
-    new_user.fullname = new_user.attribute_encrypt(fullname)
+    new_user.fullname = new_user.attribute_encrypt(registration.fullname)
     puts "Step 3"
-    new_user.dob = new_user.attribute_encrypt(dob)
+    new_user.dob = new_user.attribute_encrypt(registration.dob)
     puts "Step 4"
-    new_user.address = new_user.attribute_encrypt(address)
+    new_user.address = new_user.attribute_encrypt(registration.address)
     puts "Step 5"
     new_user.save! ? login_user(new_user) : fail('Could not create a new user')
   end
