@@ -87,6 +87,7 @@ module CreditCardHelper
     new_user = User.new(username: registration.username, email: registration.email)
     puts "Step 1"
     new_user.password =  registration.password
+    puts new_user.nonce
     puts "Step 2"
     puts Time.now
     new_user.fullname = new_user.attribute_encrypt(fullname)
