@@ -149,4 +149,12 @@ class CreditCardAPI < Sinatra::Base
     redirect '/'
   end
 
+  get '/validate' do
+    haml :validate
+  end
+
+  get '/store' do
+    haml :store
+  end
+
 end
