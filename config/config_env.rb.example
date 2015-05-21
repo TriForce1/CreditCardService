@@ -3,7 +3,7 @@
 
 config_env :development, :test do
   set 'DB_KEY', "[database encryption key in base64 url safe encoding]"
-  set 'MSG_KEY', "[database encryption key in base64 url safe encoding]"
+  set 'MSG_KEY', "[ JWT encryption key in base64 url safe encoding]"
 end
 
 config_env :production do

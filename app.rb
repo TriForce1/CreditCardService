@@ -3,6 +3,7 @@ require 'config_env'
 require 'rack-flash'
 require 'json'
 require 'protected_attributes'
+require 'rack-flash'
 require_relative './model/credit_card'
 require_relative './model/user'
 require_relative './helpers/creditcard_helper'
@@ -10,6 +11,10 @@ require_relative './helpers/creditcard_helper'
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
   include CreditCardHelper
+<<<<<<< HEAD
+=======
+
+>>>>>>> f996c7f0c72b9b39d6e2d0329bc6974ec80f775f
   enable :logging
 
   configure do
@@ -21,6 +26,11 @@ class CreditCardAPI < Sinatra::Base
     require 'hirb'
     Hirb.enable
     ConfigEnv.path_to_config("#{__dir__}/config/config_env.rb")
+  end
+
+  configure do
+    use Rack::Session::Cookie, secret: ENV['MSG_KEY']
+    use Rack::Flash, :sweep => true
   end
 
   before do
@@ -122,11 +132,17 @@ class CreditCardAPI < Sinatra::Base
     username = params[:username]
     password = params[:password]
     user = User.authenticate!(username, password)
-    user ? login_user(user) : redirect('/login')
+    if user
+      login_user(user)
+    else
+      flash[:error] = "Incorrect username or password!"
+      redirect('/login')
+    end
   end
 
   get '/logout' do
     session[:auth_token] = nil
+    flash[:notice] = "You have successfully logged out."
     redirect '/'
   end
 
