@@ -87,7 +87,6 @@ class CreditCardAPI < Sinatra::Base
   end
 
   get '/register' do
-    puts 'Good Stuffs'
     if token = params[:token]
       begin
         create_user_with_encrypted_token(token)
