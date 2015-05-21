@@ -91,6 +91,7 @@ module CreditCardHelper
   end
 
   def create_user_with_encrypted_token(token_enc)
+    puts "token #{token_enc}"
     token = decrypt_message(token_enc)
     payload = (JWT.decode token, ENV['MSG_KEY']).first
     puts "(tTHE PAYLOADS: (#{payload}))"
