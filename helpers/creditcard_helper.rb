@@ -82,7 +82,7 @@ module CreditCardHelper
 
   def create_account_with_registration(registration)
     puts "Creating Account"
-    puts registration
+    puts registration.username
     new_user = User.new(username: registration.username, email: registration.email)
     puts "Step 1"
     new_user.password =  registration.password
