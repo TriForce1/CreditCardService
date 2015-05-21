@@ -83,28 +83,17 @@ module CreditCardHelper
   end
 
   def create_account_with_registration(registration)
-    puts "Creating Account"
-    puts registration
     new_user = User.new(username: registration.username, email: registration.email)
-    puts "Step 1"
     new_user.password =  registration.password
-    puts new_user.nonce
-    puts "Step 2"
-    puts Time.now
     new_user.fullname = new_user.attribute_encrypt(registration.fullname)
-    puts "Step 3"
     new_user.dob = new_user.attribute_encrypt(registration.dob)
-    puts "Step 4"
     new_user.address = new_user.attribute_encrypt(registration.address)
-    puts "Step 5"
     new_user.save! ? login_user(new_user) : fail('Could not create a new user')
   end
 
   def create_user_with_encrypted_token(token_enc)
-    puts "token #{token_enc}"
     token = decrypt_message(token_enc)
     payload = (JWT.decode token, ENV['MSG_KEY']).first
-    puts "(tTHE PAYLOADS: (#{payload}))"
     reg = Registration.new(payload)
     create_account_with_registration(reg)
   end
