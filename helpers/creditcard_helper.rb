@@ -2,6 +2,7 @@ require 'jwt'
 require 'config_env'
 require 'rbnacl/libsodium'
 require 'pony'
+require 'base64'
 
 module CreditCardHelper
   class Registration
