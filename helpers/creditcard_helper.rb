@@ -81,6 +81,7 @@ module CreditCardHelper
   end
 
   def create_account_with_registration(registration)
+    puts "Creating Account"
     new_user = User.new(username: registration.username, email: registration.email)
     new_user.password =  registration.password
     new_user.fullname = new_user.attribute_encrypt(fullname)
@@ -90,11 +91,10 @@ module CreditCardHelper
   end
 
   def create_user_with_encrypted_token(token_enc)
-    puts "(tTHE PAYLOAD: (#{payload}))"
     token = decrypt_message(token_enc)
     payload = (JWT.decode token, ENV['MSG_KEY']).first
-    puts "(tTHE PAYLOAD: (#{payload}))"
-    reg = CreditCardHelper::Registration.new(payload)
+    puts "(tTHE PAYLOADS: (#{payload}))"
+    reg = Registration.new(payload)
     create_account_with_registration(reg)
   end
 end
