@@ -4,6 +4,7 @@ require 'rbnacl/libsodium'
 require 'pony'
 require 'base64'
 require_relative '../model/user'
+require 'email_veracity'
 
 module CreditCardHelper
   class Registration
@@ -19,12 +20,14 @@ module CreditCardHelper
     end
 
     def complete?
+      address = EmailVeracity::Address.new(email)
       (username && username.length > 0) &&
       (email && email.length > 0) &&
       (password && password.length > 0) &&
       (address && address.length > 0) &&
       (dob && dob.length > 0) &&
-      (fullname && fullname.length > 0)
+      (fullname && fullname.length > 0) &&
+      address.valid?
     end
   end
 

@@ -16,6 +16,7 @@ gem 'sinatra-activerecord'
 gem 'protected_attributes'
 gem 'haml'
 gem 'jwt'
+gem 'email_veracity', '~> 0.6.0'
 
 group :development do
   gem 'sqlite3'
