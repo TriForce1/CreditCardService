@@ -97,4 +97,8 @@ module CreditCardHelper
     reg = Registration.new(payload)
     create_account_with_registration(reg)
   end
+
+  def user_available(user)
+    User.find_by_username(user)
+  end
 end
