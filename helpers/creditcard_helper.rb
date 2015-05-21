@@ -3,6 +3,7 @@ require 'config_env'
 require 'rbnacl/libsodium'
 require 'pony'
 require 'base64'
+require_relative './model/user'
 
 module CreditCardHelper
   class Registration
