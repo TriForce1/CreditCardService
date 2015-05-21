@@ -8,6 +8,8 @@ gem 'thin'
 gem 'rake'
 gem 'config_env'
 gem 'rbnacl-libsodium'
+gem 'rack-flash3'
+gem 'pony'
 
 gem 'activerecord'
 gem 'sinatra-activerecord'
