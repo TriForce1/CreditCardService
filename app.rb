@@ -113,6 +113,9 @@ class CreditCardAPI < Sinatra::Base
     elsif EmailVeracity::Address.new(params[:email]).valid? != true
       flash[:error]= "Please enter a valid email address."
       redirect '/register'
+    elsif user_available(params[:username]) != nil
+      flash[:error]= "Username is not available."
+      redirect '/register'
     else
       begin
         email_registration_verification(registration)
