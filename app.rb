@@ -92,8 +92,10 @@ class CreditCardAPI < Sinatra::Base
       begin
         puts 'Good Stuff'
         puts 'Almost there !!!!!!!!!!!!!!!!!!!'
+        puts token
         flash[:notice] = "Almost there"
         create_user_with_encrypted_token(token)
+
         flash[:notice] = "Welcome! Your account has been successfully created."
       rescue
         flash[:error] = "Your account could not be created. Your link is either expired or invalid."
