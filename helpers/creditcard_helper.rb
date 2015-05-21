@@ -87,6 +87,7 @@ module CreditCardHelper
     puts "Step 1"
     new_user.password =  registration.password
     puts "Step 2"
+    puts Time.now
     new_user.fullname = new_user.attribute_encrypt(fullname)
     puts "Step 3"
     new_user.dob = new_user.attribute_encrypt(dob)
