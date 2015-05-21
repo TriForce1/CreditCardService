@@ -50,7 +50,7 @@ module CreditCardHelper
     token = JWT.encode payload, ENV['MSG_KEY'], 'HS256'
     verification = encrypt_message(token)
     Pony.mail(to: registration.email,
-             subject: "Your Credit Card API Account is Ready",
+             subject: "Your Credit Card API Account is Ready!",
              html_body: registration_email(verification))
   end
 
@@ -58,7 +58,7 @@ module CreditCardHelper
     verification_url = "#{request.base_url}/register?token=#{token}"
     "<H1>Credit Card API Registration Received<H1>" \
     "<p>Please <a href=\"#{verification_url}\" style = 'color:red'>click here</a> to validate " \
-    "your email and activate your account</p>"
+    "your email and activate your account.</p>"
   end
 
   def encrypt_message(message)
