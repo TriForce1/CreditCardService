@@ -25,8 +25,7 @@ module CreditCardHelper
       (password && password.length > 0) &&
       (address && address.length > 0) &&
       (dob && dob.length > 0) &&
-      (fullname && fullname.length > 0) &&
-       email.include? "@"
+      (fullname && fullname.length > 0)
     end
   end
 

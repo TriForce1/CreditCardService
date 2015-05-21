@@ -4,6 +4,7 @@ require 'rack-flash'
 require 'json'
 require 'protected_attributes'
 require 'rack-flash'
+require 'email_veracity'
 require_relative './model/credit_card'
 require_relative './model/user'
 require_relative './helpers/creditcard_helper'
@@ -103,19 +104,23 @@ class CreditCardAPI < Sinatra::Base
   post '/register' do
     logger.info('Register')
     registration = Registration.new(params)
-    if (registration.complete?) && (params[:password] == params[:password_confirm])
+    if (registration.complete?) != true
+      flash[:error]= "Please fill in ALL fields."
+      redirect '/register'
+    elsif (params[:password] == params[:password_confirm]) != true
+      flash[:error]= "Please ensure that the passwords are the SAME."
+      redirect '/register'
+    elsif EmailVeracity::Address.new(params[:email]).valid? != true
+      flash[:error]= "Please enter a valid email address."
+      redirect '/register'
+    else
       begin
         email_registration_verification(registration)
         flash[:notice] = "A verification link has been sent to #{params[:email]}. Please check your email!"
         redirect '/'
       rescue => e
         logger.error "FAIL EMAIL: #{e}"
-        flash[:error]= "Could not send registration verification: check email address"
-        redirect '/register'
       end
-    else
-      flash[:error] = "Please fill in ALL the fields and make sure passwords match."
-      redirect '/register'
     end
   end
 
