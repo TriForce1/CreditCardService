@@ -2,21 +2,21 @@
   color: #000000;
   background-color: rgba(13, 127, 51, 1);
   height: 30px;
-  width: 800px;
+  width: 400px;
   border-radius: 5px;
-  font-family: Cursive;
-  padding: 5px 5px 5px 5px;
+  font-family: Cursive, Arial;
+  padding: 5px 0px 5px 10px;
   font-size: 16px;
 }
 
 .flash.error {
   color: #000000;
-  background-color: rgba(204, 0, 0, 0.9);
+  background-color: rgba(204, 0, 0, 0.8);
   height: 30px;
-  width: 250px;
+  width: 500px;
   border-radius: 5px;
-  font-family: Cursive;
-  padding: 5px 0px 5px 5px;
+  font-family: Cursive, Arial;
+  padding: 5px 0px 5px 10px;
   font-size: 16px;
 }
 
