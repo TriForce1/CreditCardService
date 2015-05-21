@@ -79,7 +79,8 @@ module CreditCardHelper
   end
 
   def create_account_with_registration(registration)
-   new_user = User.new(username: registration.username, email: registration.email, password: registration.password)
+   new_user = User.new(username: registration.username, email: registration.email)
+   new_user.password =  registration.password
    new_user.fullname = new_user.attribute_encrypt(fullname)
    new_user.dob = new_user.attribute_encrypt(dob)
    new_user.address = new_user.attribute_encrypt(address)
