@@ -11,10 +11,7 @@ require_relative './helpers/creditcard_helper'
 # Credit Card Web Service
 class CreditCardAPI < Sinatra::Base
   include CreditCardHelper
-<<<<<<< HEAD
-=======
 
->>>>>>> f996c7f0c72b9b39d6e2d0329bc6974ec80f775f
   enable :logging
 
   configure do
