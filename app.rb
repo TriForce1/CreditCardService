@@ -153,10 +153,6 @@ class CreditCardAPI < Sinatra::Base
     haml :retrieve
   end
 
-  get '/apiservices' do
-    haml :apiservices
-  end
-
   get '/validate' do
     haml :validate
   end
